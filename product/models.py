@@ -25,7 +25,7 @@ class Product(models.Model):
     quantity = models.IntegerField(_('Quantity'))
     tags = TaggableManager()
     brand = models.ForeignKey('Brand',verbose_name=_('Brand'), related_name='product_brand', on_delete=models.SET_NULL,null=True)
-    slug = models.SlugField(_('Slug'),max_length=130,null=True,blank=True)
+    slug = models.SlugField(_('Slug'),null=True,blank=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
@@ -43,7 +43,10 @@ class ProductImages(models.Model):
 class Brand(models.Model):
     name = models.CharField(_('Name'),max_length=100)
     image = models.ImageField(_('Image'),upload_to='brands')
-    
+    slug= models.SlugField(_('Slug'),null=True,blank=True)
+    def save(self, *args, **kwargs):
+       self.slug = slugify(self.name)
+       super(Brand, self).save(*args, **kwargs)
     def __str__(self):
         return self.name
 
