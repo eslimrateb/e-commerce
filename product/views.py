@@ -6,6 +6,14 @@ from .models import Product, Brand, Review
 class ProductList(ListView):
     model = Product
 
+
+def queryset_debug(request):
+    data= Product.objects.all()
+
+
+
+    
+    return render(request,'product/debug.html',{'data':data})
 class ProductDetail(DetailView):
     model = Product
     def get_context_data(self, **kwargs):

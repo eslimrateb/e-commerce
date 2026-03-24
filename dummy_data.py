@@ -37,4 +37,3 @@ def seed_product(n):
         )
 
     print(f'Seed {n} Product Successfully')
-seed_product(2005)
