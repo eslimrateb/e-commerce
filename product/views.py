@@ -18,6 +18,7 @@ class ProductDetail(DetailView):
     
 class BrandDetail(ListView):
     model = Product
+    paginate_by = 10
     template_name = 'product/brand_detail.html'
     def get_queryset(self):
          brand=Brand.objects.get(slug=self.kwargs['slug'])
@@ -31,7 +32,7 @@ class BrandDetail(ListView):
 class BrandList(ListView):
     model = Brand
     queryset = Brand.objects.annotate(product_count=Count('product_brand'))
-
+    paginate_by = 30
 
 
     
