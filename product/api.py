@@ -1,6 +1,7 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import generics
+from rest_framework import generics ,filters
 from .models import Product,Brand
 from .serializers import ProductListSerializer, ProductDetailSerializer, BrandListSerializer, BrandDetailSerializer
 
@@ -19,6 +20,11 @@ from .serializers import ProductListSerializer, ProductDetailSerializer, BrandLi
 class ProductListAPI(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
+    filter_backends = [DjangoFilterBackend,filters.SearchFilter,filters.OrderingFilter]
+    filterset_fields = ['brand','flag']
+    search_fields = ['name','description','brand__name']
+    ordering_fields = ['price','quantity']
+    #ordering=['brand__name']  # default ordering
 
 class ProductDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()

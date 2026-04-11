@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     'product',
     'settings',
     'rest_framework',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10 ,
+    'PAGE_SIZE': 30 ,
 }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

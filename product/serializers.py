@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Product , Brand, Review
+from taggit.serializers import TagListSerializerField,TaggitSerializer
+
 
 class ProductListSerializer(serializers.ModelSerializer):
     brand=serializers.StringRelatedField()
@@ -20,9 +22,10 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductDetailSerializer(TaggitSerializer, serializers.ModelSerializer):
     brand=serializers.StringRelatedField()
     reviews = ReviewSerializer(source='review_product',many=True)
+    tags = TagListSerializerField()
     class Meta:
         model = Product
         fields = '__all__'
